@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import data from "../jsonData/data.json";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
@@ -10,13 +10,26 @@ const QuizPage = () => {
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [score, setScore] = useState(0);
     const [userAnswers, setUserAnswers] = useState([]);
+    const [timeLeft, setTimeLeft] = useState(60);
+
     const navigate = useNavigate();
 
     const question = data[currentQuestionIndex];
     const { options, answer } = question;
 
     const { something } = useContext(StateContext);
-    console.log("something", something);
+    // console.log("something", something);
+
+    //for handling timer function
+    useEffect(() => {
+        if (timeLeft > 0) {
+            const timer = setTimeout(() => setTimeLeft(timeLeft - 1), 1000);
+            return () => clearTimeout(timer);
+        } else {
+            handleSubmit();
+        }
+    }, [timeLeft]);
+
     // handling option click function
     const handleOptionClick = (option) => {
         if (!isSubmitted) {
@@ -26,13 +39,14 @@ const QuizPage = () => {
 
     //handling answer submit
     const handleSubmit = () => {
-        if (selectedOption) {
+        if (!isSubmitted) {
             setIsSubmitted(true);
             setUserAnswers([...userAnswers, selectedOption]);
             if (selectedOption === answer) {
                 //add mark
                 setScore(score + 1);
             }
+            setTimeout(handleNext, 1000);
         }
     };
 
@@ -51,11 +65,12 @@ const QuizPage = () => {
 
         setSelectedOption("");
         setIsSubmitted(false);
+        setTimeLeft(60);
     };
     return (
         <Container>
             <Question>{question?.question}</Question>
-            {/* Options */}
+            <Timer>Time Left: {timeLeft}</Timer>
             <OptionsConatiner>
                 {options?.map((option, index) => (
                     <Option
@@ -94,6 +109,7 @@ const Container = styled.section`
     padding: 20px;
 `;
 const Wrapper = styled.section``;
+const Timer = styled.div``;
 const Question = styled.h2`
     margin: 20px 0;
 `;
