@@ -1,0 +1,17 @@
+[
+    {
+        "question": "What is first letter of Alphabet?",
+        "options": ["A", "B", "C", "D"],
+        "answer": "A"
+    },
+    {
+        "question": "What is first 2 digit number?",
+        "options": ["12", "11", "10", "13"],
+        "answer": "10"
+    },
+    {
+        "question": "Which is National Animal?",
+        "options": ["Elephant", "Peacock", "Lion", "Tiger"],
+        "answer": "Tiger"
+    }
+]
