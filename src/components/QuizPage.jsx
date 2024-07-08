@@ -10,8 +10,9 @@ const QuizPage = () => {
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [score, setScore] = useState(0);
     const [userAnswers, setUserAnswers] = useState([]);
-    const [timeLeft, setTimeLeft] = useState(60);
+    const [timeLeft, setTimeLeft] = useState(5);
 
+    console.log("selectedOption", selectedOption);
     const navigate = useNavigate();
 
     const question = data[currentQuestionIndex];
@@ -65,7 +66,7 @@ const QuizPage = () => {
 
         setSelectedOption("");
         setIsSubmitted(false);
-        setTimeLeft(60);
+        setTimeLeft(5);
     };
     return (
         <Container>
@@ -96,6 +97,7 @@ const QuizPage = () => {
                         : "See Results"}
                 </Button>
             )}
+            <p>Current Score:{score}</p>
         </Container>
     );
 };
@@ -125,6 +127,8 @@ const Option = styled.button`
     margin: 5px 0;
     cursor: pointer;
     width: 100%;
+    color: ${(props) =>
+        props.iscorrect || props.isincorrect ? "#fff" : "#000"};
     background-color: ${(props) =>
         props.iscorrect ? "green" : props?.isincorrect ? "red" : "#eee"};
 `;
