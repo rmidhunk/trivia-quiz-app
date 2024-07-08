@@ -1,11 +1,10 @@
 import React, { createContext, useReducer } from "react";
 
+const StateContext = createContext();
+const DispatchContext = createContext();
 function AppProvider({ children }) {
-    const StateContext = createContext();
-    const DispatchContext = createContext();
-
     const initialValues = {
-        questions: 0,
+        something: 10,
     };
     const reducer = (state, action) => {};
 
@@ -19,4 +18,4 @@ function AppProvider({ children }) {
     );
 }
 
-export { AppProvider };
+export { AppProvider, StateContext, DispatchContext };

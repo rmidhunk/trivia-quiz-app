@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import data from "../jsonData/data.json";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import { StateContext } from "../context/AppProvider";
 
 const QuizPage = () => {
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -14,17 +15,8 @@ const QuizPage = () => {
     const question = data[currentQuestionIndex];
     const { options, answer } = question;
 
-    console.log(
-        "hello selectedOption",
-        selectedOption,
-        "isSubmitted",
-        isSubmitted,
-        "score",
-        score,
-        "userAnswers",
-        userAnswers
-    );
-
+    const { something } = useContext(StateContext);
+    console.log("something", something);
     // handling option click function
     const handleOptionClick = (option) => {
         if (!isSubmitted) {
@@ -49,7 +41,12 @@ const QuizPage = () => {
         if (currentQuestionIndex < data?.length - 1) {
             setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
         } else {
-            navigate("/results");
+            navigate("/results", {
+                state: {
+                    score,
+                    total_questions: data?.length,
+                },
+            });
         }
 
         setSelectedOption("");
@@ -64,8 +61,8 @@ const QuizPage = () => {
                     <Option
                         key={`KOI78${index}`}
                         onClick={() => handleOptionClick(option)}
-                        isCorrect={isSubmitted && option === answer}
-                        isInCorrect={
+                        iscorrect={isSubmitted && option === answer}
+                        isincorrect={
                             isSubmitted &&
                             option === selectedOption &&
                             option !== answer
@@ -113,7 +110,7 @@ const Option = styled.button`
     cursor: pointer;
     width: 100%;
     background-color: ${(props) =>
-        props.isCorrect ? "green" : props?.isInCorrect ? "red" : "#eee"};
+        props.iscorrect ? "green" : props?.isincorrect ? "red" : "#eee"};
 `;
 const Button = styled.button`
     border: none;
