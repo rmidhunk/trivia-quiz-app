@@ -4,9 +4,17 @@ const StateContext = createContext();
 const DispatchContext = createContext();
 function AppProvider({ children }) {
     const initialValues = {
-        something: 10,
+        marks: 0,
     };
-    const reducer = (state, action) => {};
+    const reducer = (state, action) => {
+        switch (action.type) {
+            case "UpdateMark":
+                return { marks: state.marks + 1 };
+
+            default:
+                return state;
+        }
+    };
 
     const [state, dispatch] = useReducer(reducer, initialValues);
     return (

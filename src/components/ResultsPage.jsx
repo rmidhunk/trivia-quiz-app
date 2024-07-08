@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { StateContext } from "../context/AppProvider";
 
 const ResultsPage = () => {
     const { state } = useLocation();
     const { score, total_questions } = state;
+
+    const { marks } = useContext(StateContext);
+
     const navigate = useNavigate();
     console.log("location", state);
     return (
@@ -12,7 +16,7 @@ const ResultsPage = () => {
             <Wrapper className="wrapper">
                 <Heading>Quiz Results</Heading>
                 <p>Total Questions: {total_questions}</p>
-                <p>Correct Answers: {score}</p>
+                <p>Correct Answers: {marks}</p>
                 <Button onClick={() => navigate("/")}>Play Again</Button>
             </Wrapper>
         </Container>

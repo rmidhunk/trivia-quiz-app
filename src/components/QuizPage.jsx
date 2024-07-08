@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import data from "../jsonData/data.json";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { StateContext } from "../context/AppProvider";
+import { DispatchContext, StateContext } from "../context/AppProvider";
 
 const QuizPage = () => {
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -12,14 +12,15 @@ const QuizPage = () => {
     const [userAnswers, setUserAnswers] = useState([]);
     const [timeLeft, setTimeLeft] = useState(5);
 
-    console.log("selectedOption", selectedOption);
     const navigate = useNavigate();
 
     const question = data[currentQuestionIndex];
     const { options, answer } = question;
 
-    const { something } = useContext(StateContext);
-    // console.log("something", something);
+    const { marks } = useContext(StateContext);
+    const dispatch = useContext(DispatchContext);
+
+    console.log("marks", marks);
 
     //for handling timer function
     useEffect(() => {
@@ -46,6 +47,7 @@ const QuizPage = () => {
             if (selectedOption === answer) {
                 //add mark
                 setScore(score + 1);
+                dispatch({ type: "UpdateMark" });
             }
             setTimeout(handleNext, 1000);
         }
