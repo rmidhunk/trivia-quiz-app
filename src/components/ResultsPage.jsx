@@ -16,7 +16,7 @@ const ResultsPage = () => {
             <Wrapper className="wrapper">
                 <Heading>Quiz Results</Heading>
                 <p>Total Questions: {total_questions}</p>
-                <p>Correct Answers: {marks}</p>
+                <p>Correct Answers: {score}</p>
                 <Button onClick={() => navigate("/")}>Play Again</Button>
             </Wrapper>
         </Container>
